@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Know the country.com</title>
+    <link rel="stylesheet" href="style.css">
+        <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <center><h1  style="color: white;margin-top: 205px;">Know the Country</h1>
+    </center>
+    <div class="container " >
+        
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4 mt-5 p-5 border border-2">
+
+                <form action="">
+                    <input type="text" id="c_Name" class="form-control " placeholder="Enter the Country">  
+                    <input type="button" value="search" class="btn btn-success mt-4" onclick="Search()">              
+                </form>
+            </div>
+            <div class="col-4"></div>
+        </div>
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4" id="result">
+
+            </div>
+            <div class="col-4"></div>
+        </div>
+    </div>
+    
+</body>
+<script>
+    function Search(){
+        var country=c_Name.value;
+        // console.log(country)
+        fetch(`https://restcountries.com/v3.1/name/${country}?fullText=true`)
+            .then(res=>res.json())
+        .then(countryDetails =>displaydata(countryDetails))
+
+
+            .catch(error=>{
+            alert('failed to fetch')}
+            )
+    }
+
+    function displaydata(countryDetails){
+        capital=countryDetails[0].capital
+        region=countryDetails[0].region
+        population=countryDetails[0].population
+        timezones=countryDetails[0].timezones
+        unMember=countryDetails[0].unMember
+
+        htmldata=`<div class="card" style="width:18rem">
+            <div class=card-body">
+                <h5 class="card-title"></h5>  
+                <ul class="list-group list-group-flush mt-2">
+                <li class="list-group-item">Capital:${capital}</li>
+                <li class="list-group-item">Region:${region}</li>
+                <li class="list-group-item">Population:${population}</li>
+                <li class="list-group-item">Timezone:${timezones}</li>
+                <li class="list-group-item">UN Member:${unMember}</li>
+
+                </ul>
+                </div>`
+                result.innerHTML=htmldata;
+            }
+</script>
+</html>
